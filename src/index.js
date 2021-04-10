@@ -56,7 +56,6 @@ class Game extends React.Component {
     if( history.squareClicked === null ) {
       return '' ; 
     }
-    //const len = history.squares.length ; 
     const col = history.squareClicked % 3 ; 
     const row = Math.floor( history.squareClicked / 3 ) ; 
     return ` (${col}, ${row})`;    
