@@ -4,6 +4,8 @@ import { Square } from './lib/square.js'
 import { Board } from './lib/board.js'
 import './index.css';
 
+import { Button, Grid } from '@material-ui/core'
+
 class Game extends React.Component {
   constructor( props ) {
     super( props ) ;
@@ -87,7 +89,7 @@ class Game extends React.Component {
       return null ; 
     }
     const label = this.state.desc ? 'Ascending' : 'Descending' ;    
-    return <button onClick={() => this.toggleMovesOrder()}>{label}</button>    
+    return <Button item onClick={() => this.toggleMovesOrder()}>{label}</Button>    
   }
   
   hasMoves() {
@@ -102,10 +104,10 @@ class Game extends React.Component {
         
     const moves = history.map( ( step, move ) => {
       const desc = step.move ? 
-        'Go to move #' + step.move + this.getLocation( step ) :
+        `Go to move #${step.move} ${this.getLocation( step )}` :
         'Go to game start' ; 
       
-      let className = '' ; 
+      /* let className = '' ; 
       
       if( step === current ) {
         className = 'current' ;
@@ -113,8 +115,21 @@ class Game extends React.Component {
       
       return (
         <li key={ move }>
-          <button className={className} onClick={ () => this.jumpTo( move ) }>{desc}</button>
+          <Button variant="contained" color="primary" size="small" className={className} onClick={ () => this.jumpTo( move ) }>{desc}</Button>
         </li>
+      ) ; */
+    
+      return (
+        <Grid item>
+          <Button 
+            key={move} 
+            variant="contained" 
+            color={ step === current ? "primary" : "default" }
+            size="small" 
+            onClick={ () => this.jumpTo( move ) }>
+              {desc}
+          </Button>
+        </Grid>
       ) ;       
     }) ; 
     
@@ -128,7 +143,7 @@ class Game extends React.Component {
       status = 'Next player: ' + ( this.state.xIsNext ? 'X' : 'O' ) ;      
     }
         
-    return (
+    /* return (
       <div className="game">
         <div className="game-board">
           <Board squares={ current.squares } onClick={ ( i ) => this.handleClick( i ) }/>
@@ -139,7 +154,22 @@ class Game extends React.Component {
           {this.getToggleButton()}
         </div>
       </div>
+    ); */
+
+    return (
+      <Grid container spacing={2} justify="center" alignItems="center" direction="column">
+        <Grid item>
+          { status }
+        </Grid>
+        <Grid item>
+          <Board squares={ current.squares } onClick={ ( i ) => this.handleClick( i ) }/>
+        </Grid>        
+        { moves }        
+        {this.getToggleButton()}
+      </Grid>
     );
+
+
   }
 }
 
