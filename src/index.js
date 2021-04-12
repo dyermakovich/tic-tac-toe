@@ -89,7 +89,10 @@ class Game extends React.Component {
       return null ; 
     }
     const label = this.state.desc ? 'Ascending' : 'Descending' ;    
-    return <Button item onClick={() => this.toggleMovesOrder()}>{label}</Button>    
+    return 
+      <Grid item key={'toggle-button'}>
+        <Button onClick={() => this.toggleMovesOrder()}>{label}</Button>
+      </Grid>   
   }
   
   hasMoves() {
@@ -120,9 +123,8 @@ class Game extends React.Component {
       ) ; */
     
       return (
-        <Grid item>
+        <Grid item key={'move-' + move}>
           <Button 
-            key={move} 
             variant="contained" 
             color={ step === current ? "primary" : "default" }
             size="small" 
@@ -158,10 +160,10 @@ class Game extends React.Component {
 
     return (
       <Grid container spacing={2} justify="center" alignItems="center" direction="column">
-        <Grid item>
+        <Grid item key={'status'}>
           { status }
         </Grid>
-        <Grid item>
+        <Grid item key={'board'}>
           <Board squares={ current.squares } onClick={ ( i ) => this.handleClick( i ) }/>
         </Grid>        
         { moves }        
